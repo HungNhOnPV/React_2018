@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/custom.css">
 </head>
 <body>
     <div id="root"></div>
@@ -9,10 +11,12 @@
     <img src="http://lorempixel.com/400/200" /> -->
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script>
+    <script type="text/babel">
         const Hello = React.createElement("div", null, "Hello Coder.Tokyou");
-        const Title = React.createElement("div", { className: 'title' }, "React tutorials");
+        // const Title = React.createElement("div", { className: 'title' }, "React tutorials");
+        const Title = <div class = "title">React tutorials</div>
         const Image = React.createElement("img", { src: "http://lorempixel.com/400/200" });
         
         const App = React.createElement("div", null, Hello, Title, Image);
