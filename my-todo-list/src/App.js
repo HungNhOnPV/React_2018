@@ -7,26 +7,54 @@ import TodoItem from './components/TodoItem';
 class App extends Component {
   constructor() {
     super();
-    this.todoList = [
-      // { title: 'Mua bim bim', isComplete: true },
-      // { title: 'Đi đá bóng', isComplete: true },
-      // { title: 'Đi đổ xăng', isComplete: false }
-    ];
+    this.state = {
+      todoItems: [
+      { title: 'Mua bim bim', isComplete: true },
+      { title: 'Đi đá bóng', isComplete: true },
+      { title: 'Đi đổ xăng', isComplete: false }
+    ]}
+  }
+
+  onItemClicked(item) {  
+    return(event) => {
+      const isComplete = item.isComplete;
+      const { todoItems } = this.state;
+      const index = todoItems.indexOf(item);
+      
+      this.setState({
+        todoItems: [
+          ...todoItems.slice(0, index),
+          {
+            ...item,
+            isComplete: !isComplete
+          },
+          ...todoItems.slice(index +1)
+        ]
+      });
+    };
   }
 
   render() {
-    return (
-      <div className="App">
-        {
-          this.todoList.length > 0 && this.todoList.map((item, index) =>  
-            <TodoItem key = {index} item = {item}/>
-          )
-        }
-        {
-          this.todoList.length === 0 && 'Nothing here.'
-        }
-      </div>
-    );
+    const { todoItems } = this.state;
+
+    if(todoItems.length) {
+      return (
+        <div className="App">
+          {
+            todoItems.length > 0 && todoItems.map((item, index) =>  
+              <TodoItem 
+              key = {index} 
+              item = {item} 
+              onClick = {this.onItemClicked(item)} />
+            )
+          }
+        </div>
+      );
+    } else {
+        return(
+        <div className="App">Nothing here.</div>
+        );
+      }
     }
 }
 
