@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.WeeklySongListItem {
+	display: flex;
+	align-items: center;
+	padding: 12px 0;
+	border-bottom: 1px solid #EEE;
+}
+
+.WeeklySongListItem .order {
+	font-size: 20px;
+	padding: 0 8px;
+}
+
+.WeeklySongListItem .info {
+	font-size: 14px;
+	flex-grow: 1;
+}
+
+.WeeklySongListItem .title {
+	margin-bottom: 8px;
+}
+
+.WeeklySongListItem .singer {
+	font-size: 13px;
+	color: #999;
+}
+
+.WeeklySongListItem .view-count {
+	font-size: 13px;
+	color: #999;
+}
