@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Collapse, Navbar,  NavbarToggler,  NavbarBrand,  Nav,  NavItem,  NavLink,  } from 'reactstrap';
 import { Link } from "react-router-dom";
 
+import { CartContext } from "../contexts/Cart";
+
 const TopMenu = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,6 +24,13 @@ const TopMenu = (props) => {
             <NavItem>
             <NavLink>
                   <Link to="/products">Products</Link>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+            <NavLink>
+              <CartContext.Consumer>
+                {({ cartItems }) => <Link to="/products/">Cart ({cartItems.length})</Link>}
+              </CartContext.Consumer>
               </NavLink>
             </NavItem>
           </Nav>
