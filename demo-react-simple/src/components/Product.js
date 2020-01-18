@@ -4,15 +4,15 @@ class Product extends Component {
     render() {
         return(
             
-            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <div className="thumbnail">
-                    <img src="https://cdn.fptshop.com.vn/Uploads/Originals/2018/10/11/636748771945393060_iPhone-Xs-Max-gold.png" alt="Iphone XS Max" />
+                    <img src={ this.props.image } alt={ this.props.children } />
                     <div className="caption">
-                        <h3>Iphone XS Max</h3>
+                        <h3>{ this.props.children }</h3>
                         <p>
-                            1.500 $
+                            { this.props.price } $
                         </p>
-                        <button type="button" className="btn btn-default">Add Cart</button>
+                        <button type="button" className="btn btn-primary">Add Cart</button>
                     </div>
                 </div>
             </div>
