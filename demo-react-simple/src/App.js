@@ -1,6 +1,9 @@
 import React from 'react';
-import Header from './components/Header.js';
-import Product from './components/Product.js';
+
+import Header from './components/Header';
+import Product from './components/Product';
+import FromAddProduct from './components/FormAddProduct';
+
 import Iphone from './images/Iphone-XS-Max.png';
 
 function App() {
@@ -67,6 +70,9 @@ function App() {
             <div className="App">
                 < Header />
                 <div className="row">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <FromAddProduct />
+                    </div>
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         { elements }
                     </div>

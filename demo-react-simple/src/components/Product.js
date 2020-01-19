@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class Product extends Component {
+    clickAddToCart = () => {
+        alert(this.props.children);
+    }
+
     render() {
         return(
             
@@ -12,7 +16,7 @@ class Product extends Component {
                         <p>
                             { this.props.price } $
                         </p>
-                        <button type="button" className="btn btn-primary">Add Cart</button>
+                        <button type="button" className="btn btn-primary" onClick={ this.clickAddToCart }>Add Cart</button>
                     </div>
                 </div>
             </div>
