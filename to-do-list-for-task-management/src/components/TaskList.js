@@ -3,6 +3,12 @@ import TaskItem from './TaskItem';
 
 class TaskList extends Component {
     render() {
+        const { tasks } = this.props;
+
+        const elmTask = tasks.map((task, index) => {
+            return <TaskItem key={ task.id } index={ index } task={ task } />
+        })
+
         return(
             <table className="table table-bordered table-hover">
                 <thead>
@@ -35,9 +41,7 @@ class TaskList extends Component {
                         </td>
                         <td></td>
                     </tr>
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
+                    { elmTask }
                 </tbody>
             </table>
         );

@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 class TaskItem extends Component {
     render() {
+        const { index, task } = this.props;
         return(
             <tr>
-                <td>1</td>
-                <td>Học Angular 4</td>
+                <td>{ index + 1 }</td>
+                <td>{ task.name }</td>
                 <td className="text-center">
-                    <span className="label label-danger">
-                        Kích Hoạt
+                    <span className={ task.status === true ? 'label label-danger' : 'label label-success'}>
+                    { task.status === true ? 'Kích Hoạt' : 'Ẩn'}
                     </span>
                 </td>
                 <td className="text-center">
