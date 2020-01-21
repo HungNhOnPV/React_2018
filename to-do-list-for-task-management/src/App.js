@@ -20,32 +20,6 @@ class App extends React.Component {
         }
     }
 
-    onGenerateData = () => {
-        const tasks = [
-            {
-                id: this.generateId(),
-                name: 'Choi',
-                status: true
-            },
-            {
-                id: this.generateId(),
-                name: 'Hoc',
-                status: false
-            },
-            {
-                id: this.generateId(),
-                name: 'Ngu',
-                status: true
-            }
-        ];
-        
-        this.setState({
-            tasks: tasks
-        });
-
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-
     s4 = () => {
         return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     }
@@ -55,7 +29,25 @@ class App extends React.Component {
                 + '-' + this.s4() + this.s4() + this.s4();
     }
 
-    elmTaskForm = value => value ? <TaskForm  isDisplayForm={ this.state.isDisplayForm } onCloseForm={ this.onCloseForm } /> : '';
+    elmTaskForm = value => value 
+        ? <TaskForm  
+            isDisplayForm={ this.state.isDisplayForm } 
+            onCloseForm={ this.onCloseForm } 
+            onSubmit={ this.onSubmit }
+        /> : '';
+
+    onSubmit = (data) => {
+        const { tasks } = this.state;
+        data.id = this.generateId();
+        tasks.push(data);
+
+        this.setState({
+            tasks: tasks
+        });
+
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+
+    }
 
     onToggleForm = () => {
         this.setState({
@@ -67,6 +59,28 @@ class App extends React.Component {
         this.setState({
             isDisplayForm: params
         });
+    }
+
+    onUpdateStatus = id => {
+        const { tasks } = this.state;
+        const index = this.findIndex(id);
+
+        if(index !== -1) {
+            tasks[index].status = !tasks[index].status;
+            this.setState({
+                tasks: tasks
+            });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+    }
+
+    findIndex = id => {
+        const { tasks } = this.state;
+        let result = -1;
+        tasks.forEach((task, index) => {
+            if(task.id === id) result = index;
+        });
+        return result;
     }
 
   render() {
@@ -91,20 +105,12 @@ class App extends React.Component {
             >
                 <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>&nbsp;
-            <button 
-                type="button" 
-                className="btn btn-danger"
-                onClick={ this.onGenerateData }
-                >
-                Generate Data
-            </button>
-
             
             <Control /> 
 
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <TaskList tasks={ tasks } />
+                    <TaskList tasks={ tasks } onUpdateStatus={ this.onUpdateStatus } />
                 </div>
             </div>
           </div>

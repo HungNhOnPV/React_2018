@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
 
 class TaskForm extends Component {
+    state = {
+        name: '',
+        status: false
+    }
 
     onCloseForm = () => {
         this.props.onCloseForm(!this.props.isDisplayForm);
     }
 
-    render() {
+    onChange = event => {
+        const target = event.target;
+        const name = target.name;
+        let value = target.value;
+        if( name === 'status') value = target.value === 'true' ? true : false; 
+        this.setState({
+            [name]: value
+        });
+    }
 
+    onSubmit = event => {
+        event.preventDefault();
+        this.props.onSubmit(this.state);
+        this.onClear();
+        this.onCloseForm();
+    }
+
+    onClear = () => {
+        this.setState({
+            name: '',
+            status: false
+        });
+    }
+
+    render() {
+        const { name, status} = this.state;
         return(
             <div className="panel panel-warning">
                 <div className="panel-heading">
@@ -20,13 +48,15 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                <form>
+                <form onSubmit={ this.onSubmit }>
                     <div className="form-group">
                         <label>Tên :</label>
                         <input 
                             type="text" 
                             className="form-control" 
                             name="name"
+                            value={ name }
+                            onChange={ this.onChange }
                         />
                         <br/>
 
@@ -34,15 +64,24 @@ class TaskForm extends Component {
                         <select 
                             className="form-control"
                             name="status"
+                            value={ status }
+                            onChange={ this.onChange }
                         >
                             <option value={true}>Kích hoạt</option>
                             <option value={false}>Ẩn</option>
                         </select><br/>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-warning">
+                            <button 
+                                type="submit" 
+                                className="btn btn-warning"
+                            >
                                 <span className="fa fa-plus mr-5"></span>Lưu lại
                             </button>&nbsp;
-                            <button type="button" className="btn btn-danger">
+                            <button 
+                                type="button" 
+                                className="btn btn-danger"
+                                onClick={ this.onClear }
+                            >
                                 <span className="fa fa-close mr-5"></span>Hủy bỏ
                             </button>
                         </div>
