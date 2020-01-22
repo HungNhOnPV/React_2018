@@ -13,19 +13,19 @@ class Sort extends Component {
                         aria-haspopup="true"
                         aria-expanded="true"
                     >
-                        Sắp Xếp <span className="fa fa-caret-square-o-down ml-5"></span>
+                        Sắp Xếp <span className="fa fa-caret-square-down ml-5"></span>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li>
                             <a role="button" className="sort_selected">
-                                <span className="fa fa-sort-alpha-asc pr-5">
+                                <span className="fa fa-sort-alpha-down pr-5">
                                     Tên A-Z
                                 </span>
                             </a>
                         </li>
                         <li>
                             <a role="button" className="sort_selected">
-                                <span className="fa fa-sort-alpha-asc pr-5">
+                                <span className="fa fa-sort-alpha-down-alt pr-5">
                                     Tên Z-A
                                 </span>
                             </a>
