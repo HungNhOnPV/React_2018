@@ -8,7 +8,8 @@ import TaskList from './components/TaskList';
 class App extends React.Component {
     state = {
         tasks: [],
-        isDisplayForm: false
+        isDisplayForm: false,
+        taskEditing: null
     };
 
     componentWillMount() {
@@ -31,15 +32,20 @@ class App extends React.Component {
 
     elmTaskForm = value => value 
         ? <TaskForm  
-            isDisplayForm={ this.state.isDisplayForm } 
             onCloseForm={ this.onCloseForm } 
             onSubmit={ this.onSubmit }
+            task={ this.state.taskEditing }
         /> : '';
 
     onSubmit = (data) => {
         const { tasks } = this.state;
-        data.id = this.generateId();
-        tasks.push(data);
+        if(data.id === '') {
+            data.id = this.generateId();
+            tasks.push(data);
+        } else {
+            let index = this.findIndex(data.id);
+            tasks[index] = data;
+        }
 
         this.setState({
             tasks: tasks
@@ -50,14 +56,28 @@ class App extends React.Component {
     }
 
     onToggleForm = () => {
+        if(this.state.isDisplayForm && this.state.taskEditing) {
+            this.setState({
+                isDisplayForm: true,
+                taskEditing: null
+            });
+        } else {
+            this.setState({
+                isDisplayForm: !this.state.isDisplayForm,
+                taskEditing: null
+            });
+        }
+    }
+
+    onCloseForm = () => {
         this.setState({
-            isDisplayForm: !this.state.isDisplayForm
+            isDisplayForm: false
         });
     }
 
-    onCloseForm = params => {
+    onShowForm = () => {
         this.setState({
-            isDisplayForm: params
+            isDisplayForm: true
         });
     }
 
@@ -86,6 +106,19 @@ class App extends React.Component {
             localStorage.setItem('tasks', JSON.stringify(tasks));
         }
         this.onCloseForm();
+    }
+
+    onUpdate = id => {
+        const { tasks } = this.state;
+        const index = this.findIndex(id);
+        let taskEditing = tasks[index];
+
+        if(index !== -1) {
+            this.onShowForm();
+            this.setState({
+                taskEditing: taskEditing
+            });
+        }
     }
 
     findIndex = id => {
@@ -128,6 +161,7 @@ class App extends React.Component {
                         tasks={ tasks } 
                         onUpdateStatus={ this.onUpdateStatus } 
                         onDelete={ this.onDelete } 
+                        onUpdate={ this.onUpdate }
                     />
                 </div>
             </div>
