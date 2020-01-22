@@ -9,7 +9,12 @@ class App extends React.Component {
     state = {
         tasks: [],
         isDisplayForm: false,
-        taskEditing: null
+        taskEditing: null,
+        filter: {
+            name: '',
+            status: -1
+        },
+        keyword: ''
     };
 
     componentWillMount() {
@@ -130,8 +135,45 @@ class App extends React.Component {
         return result;
     }
 
+    onFilter = (filterName, filterStatus) => {
+        filterStatus = parseInt(filterStatus, 10);
+
+        this.setState({
+            filter: {
+                name: filterName.toLowerCase(),
+                status: filterStatus
+            }
+        });
+    }
+
+    onSearch = keyword => {
+        this.setState({
+            keyword: keyword
+        });
+    }
+
   render() {
-      const { tasks, isDisplayForm } = this.state;
+      let { tasks, isDisplayForm, filter, keyword } = this.state;
+
+      if(filter) {
+          if(filter.name) {
+              tasks = tasks.filter((task) => {
+                  return task.name.toLowerCase().indexOf(filter.name) !== -1;
+              });
+          }
+
+        tasks = tasks.filter((task) => {
+            if(filter.status === -1) {
+                return task;
+            } else return task.status === (filter.status === 1 ? true : false);
+        });
+    }
+
+    if(keyword) {
+        tasks = tasks.filter((task) => {
+            return task.name.toLowerCase().indexOf(keyword) !== -1;
+        });
+    }
 
     return(
       
@@ -153,7 +195,7 @@ class App extends React.Component {
                 <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>&nbsp;
             
-            <Control /> 
+            <Control onSearch={ this.onSearch } /> 
 
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -162,6 +204,7 @@ class App extends React.Component {
                         onUpdateStatus={ this.onUpdateStatus } 
                         onDelete={ this.onDelete } 
                         onUpdate={ this.onUpdate }
+                        onFilter={ this.onFilter }
                     />
                 </div>
             </div>

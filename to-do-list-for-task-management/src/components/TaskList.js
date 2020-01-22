@@ -2,8 +2,27 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 
 class TaskList extends Component {
+    state = {
+        filterName: '',
+        filterStatus: -1
+    }
+
+    onChange = event => {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+        this.props.onFilter(
+            name === 'filterName' ? value : this.state.filterName,
+            name === 'filterStatus' ? value : this.state.filterStatus
+        );
+        this.setState({
+            [name]: value
+        });
+    }
+
     render() {
         const { tasks } = this.props;
+        const { filterName, filterStatus } = this.state;
 
         const elmTask = tasks.map((task, index) => {
             return <TaskItem 
@@ -34,12 +53,16 @@ class TaskList extends Component {
                                 type="text"
                                 className="form-control"
                                 name="filterName"
+                                value={ filterName }
+                                onChange={ this.onChange }
                             />
                         </td>
                         <td>
                             <select
                                 className="form-control"
                                 name="filterStatus"
+                                value= { filterStatus }
+                                onChange={ this.onChange }
                             >
                                 <option value={-1}>Tất cả</option>
                                 <option value={0}>Ẩn</option>
