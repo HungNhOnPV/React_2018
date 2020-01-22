@@ -14,7 +14,9 @@ class App extends React.Component {
             name: '',
             status: -1
         },
-        keyword: ''
+        keyword: '',
+        sortBy: 'name',
+        sortValue: 1
     };
 
     componentWillMount() {
@@ -152,8 +154,15 @@ class App extends React.Component {
         });
     }
 
+    onSort = (sortBy,sortValue) => {
+        this.setState({
+            sortBy: sortBy,
+            sortValue: sortValue
+        });
+    }
+
   render() {
-      let { tasks, isDisplayForm, filter, keyword } = this.state;
+      let { tasks, isDisplayForm, filter, keyword, sortBy, sortValue } = this.state;
 
       if(filter) {
           if(filter.name) {
@@ -172,6 +181,20 @@ class App extends React.Component {
     if(keyword) {
         tasks = tasks.filter((task) => {
             return task.name.toLowerCase().indexOf(keyword) !== -1;
+        });
+    }
+
+    if(sortBy === 'name') {
+        tasks.sort((a, b) => {
+            if(a.name > b.name) return sortValue;
+            else if(a.name < b.name) return -sortValue;
+            else return 0;
+        });
+    } else {
+        tasks.sort((a, b) => {
+            if(a.status > b.status) return -sortValue;
+            else if(a.status < b.status) return sortValue;
+            else return 0;
         });
     }
 
@@ -195,7 +218,12 @@ class App extends React.Component {
                 <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>&nbsp;
             
-            <Control onSearch={ this.onSearch } /> 
+            <Control 
+                onSearch={ this.onSearch } 
+                onSort={ this.onSort }
+                sortBy={ sortBy}
+                sortValue={ sortValue }
+            /> 
 
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
