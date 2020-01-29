@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { filter, findIndex } from 'lodash';
 
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
@@ -90,7 +91,10 @@ class App extends React.Component {
 
     onUpdateStatus = id => {
         const { tasks } = this.state;
-        const index = this.findIndex(id);
+        // const index = this.findIndex(id);
+        const index = findIndex(tasks, (task) => {
+            return task.id === id;
+        })
 
         if(index !== -1) {
             tasks[index].status = !tasks[index].status;
@@ -166,7 +170,7 @@ class App extends React.Component {
 
       if(filter) {
           if(filter.name) {
-              tasks = tasks.filter((task) => {
+              tasks = filter(tasks, (task) => {
                   return task.name.toLowerCase().indexOf(filter.name) !== -1;
               });
           }
