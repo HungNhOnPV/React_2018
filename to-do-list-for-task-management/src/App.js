@@ -8,7 +8,6 @@ import TaskList from './components/TaskList';
 
 class App extends React.Component {
     state = {
-        tasks: [],
         isDisplayForm: false,
         taskEditing: null,
         filter: {
@@ -20,48 +19,30 @@ class App extends React.Component {
         sortValue: 1
     };
 
-    componentWillMount() {
-        if( localStorage && localStorage.getItem('tasks')) {
-            var tasks = JSON.parse(localStorage.getItem('tasks'));
-            this.setState({
-                tasks: tasks
-            });
-        }
-    }
-
-    s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    }
-
-    generateId = () => {
-        return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4() + '-' + this.s4() 
-                + '-' + this.s4() + this.s4() + this.s4();
-    }
-
     elmTaskForm = value => value 
         ? <TaskForm  
             onCloseForm={ this.onCloseForm } 
-            onSubmit={ this.onSubmit }
+            // onSubmit={ this.onSubmit }
             task={ this.state.taskEditing }
         /> : '';
 
-    onSubmit = (data) => {
-        const { tasks } = this.state;
-        if(data.id === '') {
-            data.id = this.generateId();
-            tasks.push(data);
-        } else {
-            let index = this.findIndex(data.id);
-            tasks[index] = data;
-        }
+    // onSubmit = (data) => {
+    //     const { tasks } = this.state;
+    //     if(data.id === '') {
+    //         data.id = this.generateId();
+    //         tasks.push(data);
+    //     } else {
+    //         let index = this.findIndex(data.id);
+    //         tasks[index] = data;
+    //     }
 
-        this.setState({
-            tasks: tasks
-        });
+    //     this.setState({
+    //         tasks: tasks
+    //     });
 
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+    //     localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    }
+    // }
 
     onToggleForm = () => {
         if(this.state.isDisplayForm && this.state.taskEditing) {
@@ -166,41 +147,46 @@ class App extends React.Component {
     }
 
   render() {
-      let { tasks, isDisplayForm, filter, keyword, sortBy, sortValue } = this.state;
+      let { 
+            isDisplayForm,
+            // keyword, 
+            sortBy, 
+            sortValue 
+        } = this.state;
 
-      if(filter) {
-          if(filter.name) {
-              tasks = filter(tasks, (task) => {
-                  return task.name.toLowerCase().indexOf(filter.name) !== -1;
-              });
-          }
+    //   if(this.state.filter) {
+    //       if(this.state.filter.name) {
+    //           tasks = filter(tasks, (task) => {
+    //               return task.name.toLowerCase().indexOf(this.state.filter.name) !== -1;
+    //           });
+    //       }
 
-        tasks = tasks.filter((task) => {
-            if(filter.status === -1) {
-                return task;
-            } else return task.status === (filter.status === 1 ? true : false);
-        });
-    }
+    //     tasks = tasks.filter((task) => {
+    //         if(this.state.filter.status === -1) {
+    //             return task;
+    //         } else return task.status === (this.state.filter.status === 1 ? true : false);
+    //     });
+    // }
 
-    if(keyword) {
-        tasks = tasks.filter((task) => {
-            return task.name.toLowerCase().indexOf(keyword) !== -1;
-        });
-    }
+    // if(keyword) {
+    //     tasks = tasks.filter((task) => {
+    //         return task.name.toLowerCase().indexOf(keyword) !== -1;
+    //     });
+    // }
 
-    if(sortBy === 'name') {
-        tasks.sort((a, b) => {
-            if(a.name > b.name) return sortValue;
-            else if(a.name < b.name) return -sortValue;
-            else return 0;
-        });
-    } else {
-        tasks.sort((a, b) => {
-            if(a.status > b.status) return -sortValue;
-            else if(a.status < b.status) return sortValue;
-            else return 0;
-        });
-    }
+    // if(sortBy === 'name') {
+    //     tasks.sort((a, b) => {
+    //         if(a.name > b.name) return sortValue;
+    //         else if(a.name < b.name) return -sortValue;
+    //         else return 0;
+    //     });
+    // } else {
+    //     tasks.sort((a, b) => {
+    //         if(a.status > b.status) return -sortValue;
+    //         else if(a.status < b.status) return sortValue;
+    //         else return 0;
+    //     });
+    // }
 
     return(
       
@@ -232,7 +218,6 @@ class App extends React.Component {
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <TaskList 
-                        tasks={ tasks } 
                         onUpdateStatus={ this.onUpdateStatus } 
                         onDelete={ this.onDelete } 
                         onUpdate={ this.onUpdate }
