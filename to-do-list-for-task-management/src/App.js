@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { filter, findIndex } from 'lodash';
+// import { filter, findIndex } from 'lodash';
 import { connect } from 'react-redux';
 
 import TaskForm from './components/TaskForm';
@@ -44,22 +44,6 @@ class App extends React.Component {
         this.setState({
             isDisplayForm: true
         });
-    }
-
-    onUpdateStatus = id => {
-        const { tasks } = this.state;
-        // const index = this.findIndex(id);
-        const index = findIndex(tasks, (task) => {
-            return task.id === id;
-        })
-
-        if(index !== -1) {
-            tasks[index].status = !tasks[index].status;
-            this.setState({
-                tasks: tasks
-            });
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
     }
 
     onDelete = id => {
@@ -197,7 +181,6 @@ class App extends React.Component {
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <TaskList 
-                        onUpdateStatus={ this.onUpdateStatus } 
                         onDelete={ this.onDelete } 
                         onUpdate={ this.onUpdate }
                         onFilter={ this.onFilter }

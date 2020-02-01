@@ -1,4 +1,5 @@
 import * as types from '../constants/ActionTypes';
+import { findIndex } from 'lodash';
 
 let s4 = () => {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -26,6 +27,20 @@ let myReducer = (state = initialState, action) => {
             state.push(newTask);
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
+        }
+        case types.UPDATE_STATUS_TASK: {
+            const index = findIndex(state, (task) => {
+                return task.id === action.id;
+            })
+
+            if(index !== -1) {
+                state[index] = {
+                    ...state[index],
+                    status: !state[index].status
+                }
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
+            return [...state]
         }
         default: {
             return state;

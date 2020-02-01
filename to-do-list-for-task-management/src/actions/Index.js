@@ -30,3 +30,10 @@ export const openForm = () => {
         type: types.OPEN_FORM
     }
 }
+
+export const updateStatusTask = id => {
+    return {
+        type: types.UPDATE_STATUS_TASK,
+        id
+    }
+}
