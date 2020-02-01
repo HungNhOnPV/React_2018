@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
 import { filter, findIndex } from 'lodash';
+import { connect } from 'react-redux';
 
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
+import * as actions from './actions/Index';
 
 class App extends React.Component {
     state = {
-        isDisplayForm: false,
         taskEditing: null,
         filter: {
             name: '',
@@ -21,47 +22,22 @@ class App extends React.Component {
 
     elmTaskForm = value => value 
         ? <TaskForm  
-            onCloseForm={ this.onCloseForm } 
-            // onSubmit={ this.onSubmit }
             task={ this.state.taskEditing }
         /> : '';
 
-    // onSubmit = (data) => {
-    //     const { tasks } = this.state;
-    //     if(data.id === '') {
-    //         data.id = this.generateId();
-    //         tasks.push(data);
-    //     } else {
-    //         let index = this.findIndex(data.id);
-    //         tasks[index] = data;
-    //     }
-
-    //     this.setState({
-    //         tasks: tasks
-    //     });
-
-    //     localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    // }
-
     onToggleForm = () => {
-        if(this.state.isDisplayForm && this.state.taskEditing) {
-            this.setState({
-                isDisplayForm: true,
-                taskEditing: null
-            });
-        } else {
-            this.setState({
-                isDisplayForm: !this.state.isDisplayForm,
-                taskEditing: null
-            });
-        }
-    }
-
-    onCloseForm = () => {
-        this.setState({
-            isDisplayForm: false
-        });
+        // if(this.state.isDisplayForm && this.state.taskEditing) {
+        //     this.setState({
+        //         isDisplayForm: true,
+        //         taskEditing: null
+        //     });
+        // } else {
+        //     this.setState({
+        //         isDisplayForm: !this.state.isDisplayForm,
+        //         taskEditing: null
+        //     });
+        // }
+        this.props.onToggleForm();
     }
 
     onShowForm = () => {
@@ -147,12 +123,15 @@ class App extends React.Component {
     }
 
   render() {
-      let { 
-            isDisplayForm,
+        const { 
             // keyword, 
             sortBy, 
             sortValue 
         } = this.state;
+
+        const { 
+            isDisplayForm, 
+        } = this.props;
 
     //   if(this.state.filter) {
     //       if(this.state.filter.name) {
@@ -233,4 +212,18 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        isDisplayForm: state.isDisplayForm
+    };
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onToggleForm: () => {
+            dispatch(actions.toggleForm());
+        }
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
