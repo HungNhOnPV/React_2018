@@ -20,11 +20,6 @@ class App extends React.Component {
         sortValue: 1
     };
 
-    elmTaskForm = value => value 
-        ? <TaskForm  
-            task={ this.state.taskEditing }
-        /> : '';
-
     onToggleForm = () => {
         // if(this.state.isDisplayForm && this.state.taskEditing) {
         //     this.setState({
@@ -44,20 +39,6 @@ class App extends React.Component {
         this.setState({
             isDisplayForm: true
         });
-    }
-
-    onDelete = id => {
-        const { tasks } = this.state;
-        const index = this.findIndex(id);
-
-        if(index !== -1) {
-            tasks.splice(index, 1);
-            this.setState({
-                tasks: tasks
-            });
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-        this.onCloseForm();
     }
 
     onUpdate = id => {
@@ -160,7 +141,7 @@ class App extends React.Component {
         <div className="row">
           <div className={ isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : ''}>
             {/* Form */}
-            { this.elmTaskForm(isDisplayForm) }
+            <TaskForm task={ this.state.taskEditing }/>
           </div>
           <div className={ isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
             <button 
@@ -181,7 +162,6 @@ class App extends React.Component {
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <TaskList 
-                        onDelete={ this.onDelete } 
                         onUpdate={ this.onUpdate }
                         onFilter={ this.onFilter }
                     />
