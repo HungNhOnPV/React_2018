@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import * as actions from '../actions/Index';
 
 class Search extends Component {
     state = {
@@ -15,11 +18,12 @@ class Search extends Component {
     }
 
     onSearch = () => {
-        this.props.onSearch(this.state.keyword);
+        this.props.onSearchTable(this.state.keyword);
     }
 
     render() {
         const { keyword } = this.state;
+
         return(
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div className="input-group">
@@ -46,4 +50,16 @@ class Search extends Component {
     }
 }
 
-export default Search;
+const mapStateToProps = state => {
+    return {}
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onSearchTable: keyword => {
+            dispatch(actions.searchTable(keyword));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

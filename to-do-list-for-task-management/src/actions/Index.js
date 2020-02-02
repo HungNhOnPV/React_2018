@@ -58,3 +58,10 @@ export const filterTable = filter => {
         filter
     }
 }
+
+export const searchTable = keyword => {
+    return {
+        type: types.SEARCH,
+        keyword
+    }
+}

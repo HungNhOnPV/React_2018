@@ -15,10 +15,6 @@ class TaskList extends Component {
         const target = event.target;
         let name = target.name;
         const value = target.value;
-        // this.props.onFilter(
-            // name === 'filterName' ? value : this.state.filterName,
-            // name === 'filterStatus' ? value : this.state.filterStatus
-        // );
 
         let filter = {
             name: name === 'filterName' ? value : this.state.filterName,
@@ -34,13 +30,20 @@ class TaskList extends Component {
     }
 
     render() {
-        let { tasks, filterTable } = this.props;
+        let { tasks, filterTable, keyword } = this.props;
         const { filterName, filterStatus } = this.state;
 
         // filter to table
         if(filterTable.name) {
             tasks = filter(tasks, (task) => {
                 return task.name.toLowerCase().indexOf(filterTable.name.toLowerCase()) !== -1;
+            });
+        }
+
+        // search to table
+        if(keyword) {
+            tasks = filter(tasks, (task) => {
+                return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
             });
         }
 
@@ -104,7 +107,8 @@ class TaskList extends Component {
 const mapStateToProps = state => {
     return {
         tasks: state.tasks,
-        filterTable: state.filterTable
+        filterTable: state.filterTable,
+        keyword: state.search
     }
 }
 

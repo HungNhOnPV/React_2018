@@ -9,7 +9,6 @@ import * as actions from './actions/Index';
 
 class App extends React.Component {
     state = {
-        keyword: '',
         sortBy: 'name',
         sortValue: 1
     };
@@ -29,12 +28,6 @@ class App extends React.Component {
         });
     }
 
-    onSearch = keyword => {
-        this.setState({
-            keyword: keyword
-        });
-    }
-
     onSort = (sortBy,sortValue) => {
         this.setState({
             sortBy: sortBy,
@@ -44,7 +37,6 @@ class App extends React.Component {
 
   render() {
         const { 
-            // keyword, 
             sortBy, 
             sortValue 
         } = this.state;
@@ -52,12 +44,6 @@ class App extends React.Component {
         const { 
             isDisplayForm, 
         } = this.props;
-
-    // if(keyword) {
-    //     tasks = tasks.filter((task) => {
-    //         return task.name.toLowerCase().indexOf(keyword) !== -1;
-    //     });
-    // }
 
     // if(sortBy === 'name') {
     //     tasks.sort((a, b) => {
@@ -94,7 +80,6 @@ class App extends React.Component {
             </button>&nbsp;
             
             <Control 
-                onSearch={ this.onSearch } 
                 onSort={ this.onSort }
                 sortBy={ sortBy}
                 sortValue={ sortValue }
