@@ -65,3 +65,10 @@ export const searchTable = keyword => {
         keyword
     }
 }
+
+export const sortTable = (sort) => {
+    return {
+        type: types.SORT,
+        sort
+    }
+}

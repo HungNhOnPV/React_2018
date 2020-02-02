@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/Index';
 
 class Sort extends Component {
 
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps);
-    // }
-
     onClick = (sortBy, sortValue) => {
-        this.props.onSort(sortBy, sortValue);
+        let sort = {
+            by: sortBy,
+            value: sortValue
+        }
+        this.props.onSortTable(sort);
     }
     render() {
+        const { sort } = this.props;
 
         return(
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -29,7 +32,7 @@ class Sort extends Component {
                             <a 
                                 href
                                 role="button" 
-                                className={ (this.props.sortBy === 'name' && this.props.sortValue === 1) 
+                                className={ (sort.by === 'name' && sort.value === 1) 
                                     ? 'sort_selected' : ''
                                 }
                             >
@@ -42,7 +45,7 @@ class Sort extends Component {
                         <a 
                             href
                             role="button" 
-                            className={ (this.props.sortBy === 'name' && this.props.sortValue === -1) 
+                            className={ (sort.by === 'name' && sort.value === -1) 
                                 ? 'sort_selected' : ''
                             }
                         >
@@ -56,7 +59,7 @@ class Sort extends Component {
                         <a 
                             href
                             role="button" 
-                            className={ (this.props.sortBy === 'status' && this.props.sortValue === 1) 
+                            className={ (sort.by === 'status' && sort.value === 1) 
                                 ? 'sort_selected' : ''
                             }
                         >
@@ -67,7 +70,7 @@ class Sort extends Component {
                         <a 
                             href
                             role="button" 
-                            className={ (this.props.sortBy === 'status' && this.props.sortValue === -1) 
+                            className={ (sort.by === 'status' && sort.value === -1) 
                                 ? 'sort_selected' : ''
                             }
                         >
@@ -81,4 +84,18 @@ class Sort extends Component {
     }
 }
 
-export default Sort;
+const mapStateToProps = state => {
+    return{
+        sort: state.sort
+    }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onSortTable: sort => {
+            dispatch(actions.sortTable(sort));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sort);

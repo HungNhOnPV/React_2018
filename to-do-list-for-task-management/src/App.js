@@ -8,11 +8,8 @@ import TaskList from './components/TaskList';
 import * as actions from './actions/Index';
 
 class App extends React.Component {
-    state = {
-        sortBy: 'name',
-        sortValue: 1
-    };
 
+    // toggle redux
     onToggleForm = () => {
         const { itemEditing } = this.props;
 
@@ -28,36 +25,11 @@ class App extends React.Component {
         });
     }
 
-    onSort = (sortBy,sortValue) => {
-        this.setState({
-            sortBy: sortBy,
-            sortValue: sortValue
-        });
-    }
-
   render() {
-        const { 
-            sortBy, 
-            sortValue 
-        } = this.state;
 
         const { 
             isDisplayForm, 
         } = this.props;
-
-    // if(sortBy === 'name') {
-    //     tasks.sort((a, b) => {
-    //         if(a.name > b.name) return sortValue;
-    //         else if(a.name < b.name) return -sortValue;
-    //         else return 0;
-    //     });
-    // } else {
-    //     tasks.sort((a, b) => {
-    //         if(a.status > b.status) return -sortValue;
-    //         else if(a.status < b.status) return sortValue;
-    //         else return 0;
-    //     });
-    // }
 
     return(
       
@@ -79,11 +51,7 @@ class App extends React.Component {
                 <span className="fa fa-plus mr-5"></span>Thêm Công Việc
             </button>&nbsp;
             
-            <Control 
-                onSort={ this.onSort }
-                sortBy={ sortBy}
-                sortValue={ sortValue }
-            /> 
+            <Control /> 
 
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
