@@ -10,7 +10,6 @@ import * as actions from './actions/Index';
 
 class App extends React.Component {
     state = {
-        taskEditing: null,
         filter: {
             name: '',
             status: -1
@@ -21,46 +20,24 @@ class App extends React.Component {
     };
 
     onToggleForm = () => {
-        // if(this.state.isDisplayForm && this.state.taskEditing) {
-        //     this.setState({
-        //         isDisplayForm: true,
-        //         taskEditing: null
-        //     });
-        // } else {
-        //     this.setState({
-        //         isDisplayForm: !this.state.isDisplayForm,
-        //         taskEditing: null
-        //     });
-        // }
-        this.props.onToggleForm();
+        const { itemEditing } = this.props;
+
+        if(itemEditing && itemEditing.id !== '') {
+            this.props.onOpenForm();
+        } else {
+            this.props.onToggleForm();
+        }
+        this.props.onClearTask({
+            id: '',
+            name: '',
+            status: false
+        });
     }
 
     onShowForm = () => {
         this.setState({
             isDisplayForm: true
         });
-    }
-
-    onUpdate = id => {
-        const { tasks } = this.state;
-        const index = this.findIndex(id);
-        let taskEditing = tasks[index];
-
-        if(index !== -1) {
-            this.onShowForm();
-            this.setState({
-                taskEditing: taskEditing
-            });
-        }
-    }
-
-    findIndex = id => {
-        const { tasks } = this.state;
-        let result = -1;
-        tasks.forEach((task, index) => {
-            if(task.id === id) result = index;
-        });
-        return result;
     }
 
     onFilter = (filterName, filterStatus) => {
@@ -141,7 +118,7 @@ class App extends React.Component {
         <div className="row">
           <div className={ isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : ''}>
             {/* Form */}
-            <TaskForm task={ this.state.taskEditing }/>
+            <TaskForm />
           </div>
           <div className={ isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
             <button 
@@ -162,7 +139,6 @@ class App extends React.Component {
             <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <TaskList 
-                        onUpdate={ this.onUpdate }
                         onFilter={ this.onFilter }
                     />
                 </div>
@@ -177,7 +153,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isDisplayForm: state.isDisplayForm
+        isDisplayForm: state.isDisplayForm,
+        itemEditing: state.itemEditing
     };
 }
 
@@ -185,6 +162,12 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onToggleForm: () => {
             dispatch(actions.toggleForm());
+        },
+        onClearTask: task => {
+            dispatch(actions.editItem(task));
+        },
+        onOpenForm: () => {
+            dispatch(actions.openForm());
         }
     };
 }

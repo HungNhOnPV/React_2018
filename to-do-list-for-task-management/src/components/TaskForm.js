@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/Index';
 
 class TaskForm extends Component {
-    state = {
-        id: '',
-        name: '',
-        status: false
-    }
+    state = {}
 
     componentWillMount() {
         if(this.props.task) {
@@ -16,17 +12,19 @@ class TaskForm extends Component {
                 name: this.props.task.name,
                 status: this.props.task.status
             });
+        } else {
+            this.onClear();
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps && nextProps.task) {
+        if(nextProps && nextProps.itemEditing) {
             this.setState({
-                id: nextProps.task.id,
-                name: nextProps.task.name,
-                status: nextProps.task.status
+                id: nextProps.itemEditing.id,
+                name: nextProps.itemEditing.name,
+                status: nextProps.itemEditing.status
             });
-        } else if(!nextProps.task) {
+        } else {
             this.onClear();
         }
     }
@@ -45,16 +43,15 @@ class TaskForm extends Component {
         });
     }
 
-    onSubmit = event => {
+    onSave = event => {
         event.preventDefault();
-        this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
         this.onClear();
         this.onCloseForm();
     }
 
     onClear = () => {
         this.setState({
-            id: '',
             name: '',
             status: false
         });
@@ -76,7 +73,7 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                <form onSubmit={ this.onSubmit }>
+                <form onSubmit={ this.onSave }>
                     <div className="form-group">
                         <label>Tên :</label>
                         <input 
@@ -124,14 +121,15 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        isDisplayForm: state.isDisplayForm
+        isDisplayForm: state.isDisplayForm,
+        itemEditing: state.itemEditing
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: task => {
-            dispatch(actions.addTask(task));
+        onSaveTask: task => {
+            dispatch(actions.saveTask(task));
         },
         onCloseForm : () => {
             dispatch(actions.closeForm());

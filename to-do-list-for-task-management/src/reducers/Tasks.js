@@ -18,13 +18,25 @@ let myReducer = (state = initialState, action) => {
         case types.LIST_ALL: {
             return state;
         }
-        case types.ADD_TASK: {
-            let newTask = {
-                id : generateId(),
+        case types.SAVE_TASK: {
+            let task = {
+                id: action.task.id,
                 name: action.task.name,
                 status: action.task.status === 'true' ? true : false
             }
-            state.push(newTask);
+
+            if(!task.id) {
+                task.id = generateId();
+                state.push(task);
+            } else {
+                const index = findIndex(state, (task) => {
+                    return task.id === action.task.id;
+                });
+
+                if(index !== -1) {
+                    state[index] = task;
+                }
+            }
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         }
