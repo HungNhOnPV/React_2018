@@ -6,10 +6,10 @@ class Product extends React.Component {
     const { product } = this.props;
     let tempt = [];
     for(let i = 1; i <= product.rating; i++) {
-      tempt.push(<i className="fa fa-star"></i>);
+      tempt.push(<i key={i} className="fa fa-star"></i>);
     };
     for(let i = 1; i <= (5 - product.rating); i++) {
-      tempt.push(<i className="fa fa-star-o"></i>);
+      tempt.push(<i key={i+5} className="fa fa-star-o"></i>);
     };
     return tempt;
   }
