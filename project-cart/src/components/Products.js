@@ -1,7 +1,6 @@
 import React from "react";
 
 class Products extends React.Component {
-
   render() {
     return (
       /* <!-- Products --> */
@@ -9,7 +8,7 @@ class Products extends React.Component {
         <h1 className="section-heading">Danh Sách Sản Phẩm</h1>
         <div className="row">
           {/* <!-- Product --> */}
-          { this.props.children }
+          {this.props.children}
         </div>
       </section>
     );
