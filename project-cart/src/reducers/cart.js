@@ -33,6 +33,16 @@ const cart = (state = initialState, action) => {
             localStorage.setItem('CART', JSON.stringify(state));
             return [...state];
         }
+        case types.UPDATE_PRODUCT_IN_CART: {
+            const index = findIndex(state, (item) => {
+                return product.id === item.product.id;
+            });
+            if(index !== -1) {
+                state[index].quantity = quantity;
+            }
+            localStorage.setItem('CART', JSON.stringify(state));
+            return [...state];
+        }
         default: return [...state];
     }
 }

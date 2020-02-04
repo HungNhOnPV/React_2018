@@ -9,7 +9,7 @@ import * as actions from '../actions/index';
 
 class CartContainer extends Component {
     showCartItem = cart => {
-        const { onDeleteProductInCart, onChangeMessage } = this.props;
+        const { onDeleteProductInCart, onChangeMessage, onUpdateProductInCart } = this.props;
         let result = <tr>
                         <td>{messages.MSG_CART_EMPTY}</td>
                     </tr>;
@@ -20,6 +20,7 @@ class CartContainer extends Component {
                             item={item} 
                             onDeleteProductInCart={onDeleteProductInCart}
                             onChangeMessage={onChangeMessage}
+                            onUpdateProductInCart={onUpdateProductInCart}
                             ></CartItem>
             });
         }
@@ -62,7 +63,10 @@ CartContainer.propTypes = {
                 quantity: PropsTypes.number.isRequired
             }
         )
-    ).isRequired
+    ).isRequired,
+    onDeleteProductInCart: PropsTypes.func.isRequired,
+    onChangeMessage: PropsTypes.func.isRequired,
+    onUpdateProductInCart: PropsTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -78,6 +82,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onChangeMessage: message => {
             dispatch(actions.actChangeMessage(message));
+        },
+        onUpdateProductInCart: (product, quantity) => {
+            dispatch(actions.actUpdateProductInCart(product, quantity));
         }
     }
 }

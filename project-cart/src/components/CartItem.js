@@ -2,6 +2,19 @@ import React from "react";
 import * as Message from '../constants/Messages';
 
 class CartItem extends React.Component {
+
+  state = {
+    quantity: 1
+  }
+
+  onUpdateQuantity = (product, quantity) => {
+    const { onUpdateProductInCart, onChangeMessage } = this.props;
+    if(quantity > 0) {
+      onUpdateProductInCart(product, quantity);
+    }
+    onChangeMessage(Message.MSG_UPDATE_CART_SUCCESS);
+  }
+
   showSubTotal = () => {
     const { item } = this.props;
     return item.product.price * item.quantity;
@@ -14,6 +27,7 @@ class CartItem extends React.Component {
 
   render() {
     const { item } = this.props;
+    const { quantity } = item;
     return (
       <tr>
         <th scope="row">
@@ -30,15 +44,17 @@ class CartItem extends React.Component {
         </td>
         <td>{ item.product.price }$</td>
         <td className="center-on-small-only">
-          <span className="qty">{ item.quantity } </span>
+          <span className="qty">{ quantity } </span>
           <div className="btn-group radio-group" data-toggle="buttons">
             <label
+              onClick={ () => this.onUpdateQuantity(item.product, item.quantity - 1) }
               className="btn btn-sm btn-primary
                                 btn-rounded waves-effect waves-light"
             >
               <a href>—</a>
             </label>
             <label
+              onClick={ () => this.onUpdateQuantity(item.product, item.quantity + 1) }
               className="btn btn-sm btn-primary
                                 btn-rounded waves-effect waves-light"
             >
