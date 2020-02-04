@@ -13,6 +13,10 @@ class Product extends React.Component {
     return tempt;
   };
 
+  onAddToCart = product => {
+      this.props.onAddToCart(product);
+  }
+
   render() {
     const { product } = this.props;
     return (
@@ -45,6 +49,7 @@ class Product extends React.Component {
                   data-placement="top"
                   title=""
                   data-original-title="Add to Cart"
+                  onClick={ () => this.onAddToCart(product) }
                 >
                   <i className="fa fa-shopping-cart"></i>
                 </a>
