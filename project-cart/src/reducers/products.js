@@ -30,7 +30,6 @@ let initialState = [
 
 const products = (state = initialState, action) => {
     switch(action.type) {
-        case '': return state;
         default: return state;
     }
 }
