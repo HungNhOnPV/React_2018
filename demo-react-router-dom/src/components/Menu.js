@@ -11,7 +11,12 @@ const menus = [
         name: 'Contact',
         to: '/contact',
         exact: false
-    }
+    },
+    {
+      name: 'Products',
+      to: '/products',
+      exact: false
+  }
 ];
 
 const MenuLink = ({label, to, activeOnlyWhenExact}) => {
@@ -51,11 +56,12 @@ class Menu extends Component {
 
     render() {
         return(
-            <nav class="navbar navbar-default">
-                <ul class="nav navbar-nav">
+            <nav className="navbar navbar-default">
+                <ul className="nav navbar-nav flex-row">
                 { this.showMenus(menus) }
                 </ul>
             </nav>
+            
         );
     }
 }

@@ -3,14 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import './App.css';
 
-import TopMenu from './components/TopMenu';
-import Products from './pages/Products';
+// import TopMenu from './components/TopMenu';
+// import Products from './pages/Products';
 import routers from './routers';
 
-import { CartProvider } from "./contexts/Cart"
+// import { CartProvider } from "./contexts/Cart"
 import Menu from './components/Menu';
 
-const Index = () => <h2>Home</h2>;
+// const Index = () => <h2>Home</h2>;
 
 class App extends React.Component {
 
