@@ -20,7 +20,8 @@ class Products extends Component {
         return result;
     }
     render() {
-        let { match } = this.props;
+        let { match, location } = this.props;
+        console.log(location);
         let url = match.url;
         let products = [
             {

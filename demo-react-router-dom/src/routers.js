@@ -5,6 +5,7 @@ import Contact from './components/Contact';
 import NotFound from './components/NotFound';
 import Products from './components/Products';
 import Product from './components/Product';
+import Login from './components/Login';
 
 const routers = [
     {
@@ -20,12 +21,17 @@ const routers = [
     {
         path: '/products',
         exact: false,
-        main: ({match}) => <Products match={match} />
+        main: ({match, location}) => <Products match={match} location={location} />
     },
     {
         path: '/products/:name',
         exact: false,
         main: ({match}) => <Product match={match} />
+    },
+    {
+        path: '/login',
+        exact: false,
+        main: ({location}) => <Login location={location} />
     },
     {
         path: '',
