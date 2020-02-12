@@ -11,6 +11,20 @@ class ProductActionPage extends Component {
         chkbStatus: ''
     }
 
+    componentDidMount() {
+        let { match } = this.props;
+        if(match) {
+            callApi(`products/${match.params.id}`, 'GET', null).then(res => {
+                this.setState({
+                    id: res.data.id,
+                    txtName: res.data.name,
+                    txtPrice: res.data.price,
+                    chkbStatus: res.data.status
+                });
+            });
+        }
+    }
+
     onChange = event => {
         let target = event.target;
         let name = target.name;
@@ -22,15 +36,25 @@ class ProductActionPage extends Component {
 
     onSave = event => {
         event.preventDefault();
-        let { txtName, txtPrice, chkbStatus } = this.state;
+        let { id, txtName, txtPrice, chkbStatus } = this.state;
         const { history } = this.props;
-        callApi('products', 'POST', {
-            name: txtName,
-            price: txtPrice,
-            status: chkbStatus
-        }).then(res => {
-            history.goBack();
-        });;
+        if(id) {
+            callApi(`products/${id}`, 'PUT', {
+                name: txtName,
+                price: txtPrice,
+                status: chkbStatus
+            }).then(res => {
+                history.goBack();
+            });;
+        } else {
+            callApi('products', 'POST', {
+                name: txtName,
+                price: txtPrice,
+                status: chkbStatus
+            }).then(res => {
+                history.goBack();
+            });;
+        }
     }
 
     render() {
@@ -72,6 +96,7 @@ class ProductActionPage extends Component {
                                 // eslint-disable-next-line react/jsx-no-duplicate-props
                                 value={chkbStatus}
                                 onChange={this.onChange}
+                                checked={chkbStatus}
                             />
                             Con hang
                         </label>
