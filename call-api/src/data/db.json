@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Iphone 6 plus",
+      "price": 300,
+      "status": true
+    },
+    {
+      "id": 2,
+      "name": "Samsung",
+      "price": 500,
+      "status": false
+    },
+    {
+      "id": 3,
+      "name": "Oppo f1s",
+      "price": 200,
+      "status": true
+    },
+    {
+      "name": "dawdawd",
+      "price": "500",
+      "status": "",
+      "id": 4
+    },
+    {
+      "name": "dawdawd",
+      "price": "500",
+      "status": true,
+      "id": 5
+    },
+    {
+      "name": "dawdawd",
+      "price": "500",
+      "status": "",
+      "id": 6
+    },
+    {
+      "name": "dawdawd",
+      "price": "500",
+      "status": "",
+      "id": 7
+    }
+  ]
+}
