@@ -7,6 +7,7 @@ class ProductItem extends Component {
 
     render() {
         const { product, index } = this.props;
+
         return (
             <tr>
                 <td>{index + 1}</td>
@@ -14,8 +15,8 @@ class ProductItem extends Component {
                 <td>{product.name}</td>
                 <td>{product.price}</td>
                 <td>
-                    <span className={`label label-${this.statusName}`}>{product.status}>
-                        {this.statusClass}
+                    <span className={`label label-${this.statusName()}`}>
+                        {this.statusClass()}
                     </span>
                 </td>
                 <td>
