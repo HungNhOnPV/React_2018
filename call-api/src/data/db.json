@@ -10,19 +10,13 @@
       "id": 2,
       "name": "Samsung",
       "price": 500,
-      "status": false
+      "status": true
     },
     {
       "id": 3,
       "name": "Oppo f1s",
-      "price": 200,
+      "price": "2000",
       "status": true
-    },
-    {
-      "name": "Iphone 6 plus",
-      "price": "3000",
-      "status": true,
-      "id": 4
     }
   ]
 }
